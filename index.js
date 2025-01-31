@@ -1,4 +1,4 @@
-import { fromBech32, toBech32 } from "https://cdn.jsdelivr.net/npm/@cosmjs/encoding/+esm";
+import { convertAddress } from "./cosmosAddressConvertor.js"
 
 const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT"]
 const apiUrl = "https://api.binance.com/api/v3/ticker/price?symbol="
@@ -28,12 +28,6 @@ const cosmosNetwork = "celestia"
 const baseCosmosUrl = `https://rest.cosmos.directory/${cosmosNetwork}/cosmos`
 const address = "celestia1fzq595eyhdnstdm7g2stvqkj7fj99l5hehhvje"
 console.log("Osmosis Address:", convertAddress(address, "osmo"))
-
-// Convert Celestia address to other prefixes
-function convertAddress(address, prefix) {
-    const { prefix: oldPrefix, data } = fromBech32(address)
-    return toBech32(prefix, data)
-}
 
 Promise.all([])
 const liquidBalancePromise = fetch(`${baseCosmosUrl}/bank/v1beta1/balances/${address}`)
