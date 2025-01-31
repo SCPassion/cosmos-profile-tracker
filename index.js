@@ -39,9 +39,12 @@ const networkAddresses = selectedNetworks.map(cosmosNetwork => {
     }
 )
 
-networkAddresses.map(network => {
-    return fetchBalance(network)
-})
+fetchAllBalances()
+
+async function fetchAllBalances() {
+    const balances = await Promise.all(networkAddresses.map(network => fetchBalance(network)))
+    console.log(balances)
+}
 
 async function fetchBalance(cosmosNetwork) {
     const {networkName, tokenName, address} = cosmosNetwork
@@ -59,11 +62,11 @@ async function fetchBalance(cosmosNetwork) {
     const stakingBalance = stakingData.delegation_responses.length > 0 ? Number(stakingData.delegation_responses[0].balance.amount) / 1000000 : 0
     const rewardBalance = rewardData.rewards.length > 0 ? Number(rewardData.rewards[0].reward[0].amount) / 1000000 : 0
     
-    console.log({liquidBalance, stakingBalance, rewardBalance})
+    // console.log({liquidBalance, stakingBalance, rewardBalance})
 
     const totalBalance = ((liquidBalance + stakingBalance + rewardBalance)).toFixed(6)
-    console.log({network: networkName, token: tokenName, balance: totalBalance})
 
+    return {network: networkName, token: tokenName, balance: totalBalance}
 }
 
 // // Single address balance
