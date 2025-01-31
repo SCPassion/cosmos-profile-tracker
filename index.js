@@ -23,7 +23,7 @@ async function fetchPrices(symbols) {
 //     console.log("Stop fetching")
 // }, 20000)
 
-const celestiaAddress = "celestia1fzq595eyhdnstdm7g2stvqkj7fj99l5hehhvje"
+const celestiaAddress = "celestia18pl8klprl8ktqrwn86chw8l56kcw0mapp3x88x"
 const address = celestiaAddress
 
 // Convert address type
