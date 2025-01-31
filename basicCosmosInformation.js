@@ -2,14 +2,16 @@
 const mapNetworkToSymbol = {
     celestia: "celestia",
     cosmoshub: "cosmos",
-    osmosis: "osmo"
+    osmosis: "osmo",
+    juno: "juno"
 }
 
 // Address symbol for address reconstruction
 const mapNetworkToTokenName = {
     celestia: "tia",
     cosmoshub: "atom",
-    osmosis: "osmo"
+    osmosis: "osmo",
+    juno: "juno"
 }
 
 export { mapNetworkToSymbol, mapNetworkToTokenName }

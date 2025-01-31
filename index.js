@@ -28,7 +28,7 @@ const celestiaAddress = "celestia18pl8klprl8ktqrwn86chw8l56kcw0mapp3x88x"
 const address = celestiaAddress
 
 // cosmos addresses
-const selectedNetworks = ["celestia", "cosmoshub", "osmosis"]
+const selectedNetworks = ["celestia", "cosmoshub", "osmosis", "juno"]
 
 const networkAddresses = selectedNetworks.map(cosmosNetwork => {
         return {
@@ -58,12 +58,10 @@ async function fetchBalance(cosmosNetwork) {
 
     const [liquidData, stakingData, rewardData] = await Promise.all(DataPromise.map(response => response.json()))
 
-    const liquidBalance = Number(liquidData.balances.find(balances => balances.denom === "u" + tokenName).amount) / 1000000
+    const liquidBalance = liquidData.balances.length > 0 ? Number(liquidData.balances.find(balances => balances.denom === "u" + tokenName).amount) / 1000000 : 0
     const stakingBalance = stakingData.delegation_responses.length > 0 ? Number(stakingData.delegation_responses[0].balance.amount) / 1000000 : 0
     const rewardBalance = rewardData.rewards.length > 0 ? Number(rewardData.rewards[0].reward[0].amount) / 1000000 : 0
     
-    // console.log({liquidBalance, stakingBalance, rewardBalance})
-
     const totalBalance = ((liquidBalance + stakingBalance + rewardBalance)).toFixed(6)
 
     return {network: networkName, address: address, token: tokenName, balance: totalBalance}
