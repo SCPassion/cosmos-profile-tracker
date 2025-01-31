@@ -23,15 +23,25 @@ async function fetchPrices(symbols) {
 //     console.log("Stop fetching")
 // }, 20000)
 
-const address = "celestia1fzq595eyhdnstdm7g2stvqkj7fj99l5hehhvje"
-console.log("Osmosis Address:", convertAddress(address, "osmo"))
+const celestiaAddress = "celestia1fzq595eyhdnstdm7g2stvqkj7fj99l5hehhvje"
+const address = celestiaAddress
 
 // Convert address type
+const mapNetworkToSymbol = {
+    celestia: "celestia",
+    cosmoshub: "cosmos",
+    osmosis: "osmo"
+}
+
+const selectedNetworks = ["celestia", "cosmoshub", "osmosis"]
+const networkAddresses = []
+selectedNetworks.forEach(cosmosNetwork => networkAddresses.push({networkName: cosmosNetwork, address: convertAddress(celestiaAddress, mapNetworkToSymbol[cosmosNetwork])}))
+console.log(networkAddresses)
+
+// Single address balance
 const cosmosNetwork = "celestia"
 const baseCosmosUrl = `https://rest.cosmos.directory/${cosmosNetwork}/cosmos`
 
-
-Promise.all([])
 const liquidBalancePromise = fetch(`${baseCosmosUrl}/bank/v1beta1/balances/${address}`)
 const stakingBalancePromise = fetch(`${baseCosmosUrl}/staking/v1beta1/delegations/${address}`)
 const rewardBalancePromise = fetch(`${baseCosmosUrl}/distribution/v1beta1/delegators/${address}/rewards`)
