@@ -1,33 +1,22 @@
-// // javascript
-// const url = "https://api-osmosis.imperator.co/tokens/v2/price/TIA";
+const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT"]
+const apiUrl = "https://api.binance.com/api/v3/ticker/price?symbol="
 
-// async function fetchPrice() {
-//     try {
-//         const response = await fetch(url)
-//         if (!response.ok) throw new Error("Failed to fetch price")
-        
-//         // const data = await response.json()
-            
-//         // console.log(data)
-//     } catch(error) {
-//         console.error("Error fetching:", error)
-//     }
-// }
+async function fetchPrices(symbols) {
+    const pricePromises = symbols.map(async (symb) => {
+        const response = await fetch(apiUrl + symb)
+        const data = await response.json()
+        return { symb, price: data.price }
+        }  
+    );
 
-// fetchPrice()
+    const prices = await Promise.all(pricePromises)
+    const priceInfoArr = Object.fromEntries(prices.map(priceData => [priceData.symb, priceData.price]));
+    console.log(priceInfoArr)
+}
 
-// // setInterval(() => fetchPrice(), 1000)
+const priceFetcher = setInterval(()=>fetchPrices(symbols), 2000)
 
-const ws = new WebSocket("wss://stream.binance.com:9443/ws/tiausdt@trade");
-
-// Listen for price updates
-ws.onmessage = (event) => {
-    const tradeData = JSON.parse(event.data);
-    console.log(`1 TIA = $${tradeData.p} USD`);
-};
-
-// Close WebSocket after 10 seconds
-setTimeout(() => {
-    console.log("Closing WebSocket...");
-    ws.close();
-}, 10000); // Closes after 10 seconds
+setTimeout(()=> {
+    clearInterval(priceFetcher)
+    console.log("Stop fetching")
+}, 20000)
