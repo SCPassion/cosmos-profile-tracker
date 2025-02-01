@@ -18,7 +18,9 @@ const address = celestiaAddress
 const selectedNetworks = ["celestia", "cosmoshub", "osmosis"]
 
 const networkAddresses = getNetworkAddresses(selectedNetworks)
-const cosmosBalances = await fetchAllBalances(networkAddresses)
+const totalBalance = await fetchBalances(networkAddresses)
+
+console.log(await totalBalance)
 
 function getNetworkAddresses(selectedNetworks) {
     return selectedNetworks.map(cosmosNetwork => {
@@ -31,15 +33,19 @@ function getNetworkAddresses(selectedNetworks) {
     )
 }
 
-const bal = cosmosBalances.map(cosmosBalance => {
-    const tokenSymbol = cosmosBalance.token.toUpperCase() + "USDT"
-    return { 
-        network: cosmosBalance.network , 
-        address: cosmosBalance.address, 
-        usd: (priceFeeds[tokenSymbol] * cosmosBalance.balance)
-    }
-})
+async function fetchBalances(networkAddresses) {
+    const cosmosBalances =  await fetchAllBalances(networkAddresses)
+    const bal = cosmosBalances.map(cosmosBalance => {
+        const tokenSymbol = cosmosBalance.token.toUpperCase() + "USDT"
+        return { 
+            network: cosmosBalance.network , 
+            address: cosmosBalance.address, 
+            usd: (priceFeeds[tokenSymbol] * cosmosBalance.balance)
+        }
+    })
+    const totalBalance = bal.reduce((total, balance) => total + balance.usd, 0)
+    return {priceFeeds, cosmosBalances, bal, totalBalance}
+}
 
-const totalBalance = bal.reduce((total, balance) => total + balance.usd, 0)
 
-console.log({priceFeeds, cosmosBalances, totalBalance})
+
