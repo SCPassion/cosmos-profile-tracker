@@ -35,17 +35,11 @@ function getNetworkAddresses(selectedNetworks) {
 
 async function fetchBalances(networkAddresses) {
     const cosmosBalances =  await fetchAllBalances(networkAddresses)
-    const bal = cosmosBalances.map(cosmosBalance => {
+    cosmosBalances.forEach(cosmosBalance => {
         const tokenSymbol = cosmosBalance.token.toUpperCase() + "USDT"
-        return { 
-            network: cosmosBalance.network , 
-            address: cosmosBalance.address, 
-            usd: (priceFeeds[tokenSymbol] * cosmosBalance.balance)
-        }
+        cosmosBalance['usdBalance'] = priceFeeds[tokenSymbol] * cosmosBalance.balance
+        cosmosBalance['currentTokenPrice'] = priceFeeds[tokenSymbol]
     })
-    const totalBalance = bal.reduce((total, balance) => total + balance.usd, 0)
-    return {priceFeeds, cosmosBalances, bal, totalBalance}
+    const totalBalance = cosmosBalances.reduce((total, balance) => total + balance.usdBalance, 0)
+    return {cosmosBalances, totalBalance}
 }
-
-
-
