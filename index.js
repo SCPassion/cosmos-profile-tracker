@@ -50,6 +50,7 @@ async function fetchBalance(cosmosNetwork) {
     const {networkName, tokenName, address} = cosmosNetwork
     const baseCosmosUrl = `https://rest.cosmos.directory/${networkName}/cosmos`
 
+    try {
     const DataPromise = await Promise.all([
         fetch(`${baseCosmosUrl}/bank/v1beta1/balances/${address}`), 
         fetch(`${baseCosmosUrl}/staking/v1beta1/delegations/${address}`), 
@@ -65,4 +66,7 @@ async function fetchBalance(cosmosNetwork) {
     const totalBalance = ((liquidBalance + stakingBalance + rewardBalance)).toFixed(6)
 
     return {network: networkName, address: address, token: tokenName, balance: totalBalance}
+    } catch (error) {
+        console.error(`Error fetching balance for ${networkName}:`, error)
+    }
 }
