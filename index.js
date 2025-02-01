@@ -19,13 +19,16 @@ const address = celestiaAddress
 // cosmos addresses
 const selectedNetworks = ["celestia", "cosmoshub", "osmosis", "juno"]
 
-const networkAddresses = selectedNetworks.map(cosmosNetwork => {
-        return {
-            networkName: cosmosNetwork, 
-            tokenName: mapNetworkToTokenName[cosmosNetwork],
-            address: convertAddress(celestiaAddress, mapNetworkToSymbol[cosmosNetwork])
-        }
-    }
-)
-
+const networkAddresses = getNetworkAddresses(selectedNetworks)
 fetchAllBalances(networkAddresses)
+
+function getNetworkAddresses(selectedNetworks) {
+    return selectedNetworks.map(cosmosNetwork => {
+            return {
+                networkName: cosmosNetwork, 
+                tokenName: mapNetworkToTokenName[cosmosNetwork],
+                address: convertAddress(celestiaAddress, mapNetworkToSymbol[cosmosNetwork])
+            }
+        }
+    )
+}
