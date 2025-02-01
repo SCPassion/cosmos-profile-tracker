@@ -4,8 +4,9 @@ import { fetchPrices } from "./fetchBinancePriceFeed.js"
 const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT"]
 
 const priceFeeds = await fetchPrices(symbols)
-// const priceFetcher = setInterval(async ()=>console.log(await fetchPrices(symbols)), 2000)
 
+// How to fetch prices every 2 seconds continuously?
+// const priceFetcher = setInterval(async ()=>console.log(await fetchPrices(symbols)), 2000)
 // setTimeout(()=> {
 //     clearInterval(priceFetcher)
 //     console.log("Stop fetching")
