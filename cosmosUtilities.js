@@ -1,4 +1,27 @@
-export async function fetchAllBalances(networkAddresses) {
+import { fromBech32, toBech32 } from "https://cdn.jsdelivr.net/npm/@cosmjs/encoding/+esm";
+
+// Address symbol for address reconstruction
+const mapNetworkToSymbol = {
+    celestia: "celestia",
+    cosmoshub: "cosmos",
+    osmosis: "osmo",
+    juno: "juno"
+}
+
+// Address symbol for address reconstruction
+const mapNetworkToTokenName = {
+    celestia: "tia",
+    cosmoshub: "atom",
+    osmosis: "osmo",
+    juno: "juno"
+}
+
+function convertAddress(address, prefix) {
+    const { prefix: oldPrefix, data } = fromBech32(address);
+    return toBech32(prefix, data);
+}
+
+async function fetchAllBalances(networkAddresses) {
     const balances = await Promise.all(networkAddresses.map(network => fetchBalance(network)))
     console.log(balances)
 }
@@ -27,3 +50,5 @@ async function fetchBalance(cosmosNetwork) {
         console.error(`Error fetching balance for ${networkName}:`, error)
     }
 }
+
+export { mapNetworkToSymbol, mapNetworkToTokenName, convertAddress, fetchAllBalances}

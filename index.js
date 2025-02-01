@@ -1,6 +1,4 @@
-import { convertAddress } from "./cosmosAddressConvertor.js"
-import { mapNetworkToSymbol, mapNetworkToTokenName } from "./basicCosmosInformation.js"
-import { fetchAllBalances } from "./fetchCosmosBalance.js"
+import { mapNetworkToSymbol, mapNetworkToTokenName, convertAddress, fetchAllBalances } from "./cosmosUtilities.js"
 import { fetchPrices } from "./fetchBinancePriceFeed.js"
 
 const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT"]
