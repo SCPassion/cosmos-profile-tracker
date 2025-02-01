@@ -13,7 +13,6 @@ const priceFeeds = await fetchPrices(symbols)
 // }, 20000)
 
 const celestiaAddress = "celestia1d3zcy6zm69m23mewaw0ja96pjll8a2vflzz598"
-const address = celestiaAddress
 
 // cosmos addresses
 const selectedNetworks = ["celestia", "cosmoshub", "osmosis"]
