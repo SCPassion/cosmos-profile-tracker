@@ -20,7 +20,7 @@ const selectedNetworks = ["celestia", "cosmoshub", "osmosis"]
 const networkAddresses = getNetworkAddresses(selectedNetworks)
 const totalBalance = await fetchBalances(networkAddresses)
 
-console.log(await totalBalance)
+console.log(totalBalance)
 
 function getNetworkAddresses(selectedNetworks) {
     return selectedNetworks.map(cosmosNetwork => {
