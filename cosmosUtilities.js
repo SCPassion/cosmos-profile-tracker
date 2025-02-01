@@ -16,16 +16,19 @@ const mapNetworkToTokenName = {
     juno: "juno"
 }
 
+// Convert a cosmos address to a different network prefix
 function convertAddress(address, prefix) {
     const { prefix: oldPrefix, data } = fromBech32(address);
     return toBech32(prefix, data);
 }
 
+// Fetch balances for all networks
 async function fetchAllBalances(networkAddresses) {
     const balances = await Promise.all(networkAddresses.map(network => fetchBalance(network)))
     return balances
 }
 
+// Fetch balance for a single network
 async function fetchBalance(cosmosNetwork) {
     const {networkName, tokenName, address} = cosmosNetwork
     const baseCosmosUrl = `https://rest.cosmos.directory/${networkName}/cosmos`
