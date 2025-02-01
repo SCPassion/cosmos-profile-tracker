@@ -12,7 +12,7 @@ const priceFeeds = await fetchPrices(symbols)
 //     console.log("Stop fetching")
 // }, 20000)
 
-const celestiaAddress = "celestia1d3zcy6zm69m23mewaw0ja96pjll8a2vflzz598"
+const anyCosmosAddress = "celestia1d3zcy6zm69m23mewaw0ja96pjll8a2vflzz598"
 
 // cosmos addresses
 const selectedNetworks = ["celestia", "cosmoshub", "osmosis"]
@@ -27,7 +27,7 @@ function getNetworkAddresses(selectedNetworks) {
             return {
                 networkName: cosmosNetwork, 
                 tokenName: mapNetworkToTokenName[cosmosNetwork],
-                address: convertAddress(celestiaAddress, mapNetworkToSymbol[cosmosNetwork])
+                address: convertAddress(anyCosmosAddress, mapNetworkToSymbol[cosmosNetwork])
             }
         }
     )
