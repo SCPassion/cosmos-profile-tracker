@@ -3,7 +3,7 @@ import { fetchPrices } from "./fetchBinancePriceFeed.js"
 
 const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT"]
 
-// const priceFeed = await fetchPrices(symbols)
+const priceFeeds = await fetchPrices(symbols)
 // const priceFetcher = setInterval(async ()=>console.log(await fetchPrices(symbols)), 2000)
 
 // setTimeout(()=> {
@@ -11,14 +11,14 @@ const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT"]
 //     console.log("Stop fetching")
 // }, 20000)
 
-const celestiaAddress = "celestia18pl8klprl8ktqrwn86chw8l56kcw0mapp3x88x"
+const celestiaAddress = "celestia1d3zcy6zm69m23mewaw0ja96pjll8a2vflzz598"
 const address = celestiaAddress
 
 // cosmos addresses
-const selectedNetworks = ["celestia", "cosmoshub", "osmosis", "juno"]
+const selectedNetworks = ["celestia", "cosmoshub", "osmosis"]
 
 const networkAddresses = getNetworkAddresses(selectedNetworks)
-fetchAllBalances(networkAddresses)
+const cosmosBalances = await fetchAllBalances(networkAddresses)
 
 function getNetworkAddresses(selectedNetworks) {
     return selectedNetworks.map(cosmosNetwork => {
@@ -30,3 +30,16 @@ function getNetworkAddresses(selectedNetworks) {
         }
     )
 }
+
+const bal = cosmosBalances.map(cosmosBalance => {
+    const tokenSymbol = cosmosBalance.token.toUpperCase() + "USDT"
+    return { 
+        network: cosmosBalance.network , 
+        address: cosmosBalance.address, 
+        usd: (priceFeeds[tokenSymbol] * cosmosBalance.balance)
+    }
+})
+
+const totalBalance = bal.reduce((total, balance) => total + balance.usd, 0)
+
+console.log({priceFeeds, cosmosBalances, totalBalance})

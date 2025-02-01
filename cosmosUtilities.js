@@ -23,7 +23,7 @@ function convertAddress(address, prefix) {
 
 async function fetchAllBalances(networkAddresses) {
     const balances = await Promise.all(networkAddresses.map(network => fetchBalance(network)))
-    console.log(balances)
+    return balances
 }
 
 async function fetchBalance(cosmosNetwork) {
