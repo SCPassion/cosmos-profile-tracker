@@ -46,9 +46,9 @@ async function fetchBalance(cosmosNetwork) {
     const stakingBalance = stakingData.delegation_responses.length > 0 ? Number(stakingData.delegation_responses[0].balance.amount) / 1000000 : 0
     const rewardBalance = rewardData.rewards.length > 0 ? Number(rewardData.rewards[0].reward[0].amount) / 1000000 : 0
     
-    const totalBalance = ((liquidBalance + stakingBalance + rewardBalance)).toFixed(6)
+    const totalBalance = ((liquidBalance + stakingBalance + rewardBalance)).toFixed(2)
 
-    return {network: networkName, address: address, token: tokenName, balance: totalBalance}
+    return {network: networkName, address: address, token: tokenName, balance: Number(totalBalance)}
     } catch (error) {
         console.error(`Error fetching balance for ${networkName}:`, error)
     }
