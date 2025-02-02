@@ -2,7 +2,9 @@ import { mapNetworkToSymbol, mapNetworkToTokenName, convertAddress, fetchAllBala
 import { fetchPrices } from "./fetchBinancePriceFeed.js"
 
 const cosmosAddressInputEl = document.getElementById('cosmos-address')
-const portfolioTableEl = document.getElementById('portfolio-table')
+const portfolioBodyEl = document.getElementById('portfolio-body')
+const portfolioFooterEl = document.getElementById('portfolio-footer')
+
 const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT"]
 
 let baseTableHeader = `
@@ -63,7 +65,7 @@ document.addEventListener('submit', async (e) => {
     const totalBalance = await fetchBalances(networkAddresses)
     console.log(totalBalance)
 
-    const porttabelRows = totalBalance.cosmosBalances.map(cosmosBalance => `
+    const porttableRows = totalBalance.cosmosBalances.map(cosmosBalance => `
         <tr>
             <td>${cosmosBalance.token.toUpperCase()}</td>
             <td>${cosmosBalance.currentTokenPrice}</td>
@@ -80,5 +82,6 @@ document.addEventListener('submit', async (e) => {
         </tr>
     </tfoot>`
     
-    portfolioTableEl.innerHTML = baseTableHeader + porttabelRows + totalBalanceRow
+    portfolioBodyEl.innerHTML = porttableRows
+    portfolioFooterEl.innerHTML = totalBalanceRow
 });
