@@ -1,10 +1,71 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* semantic html */
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
     background: #27292c;
-    color: white;
+    text-align: center;
+    height: 100vh;
+
+    background: #373B44;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    font-family: "Orbitron", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2rem;
+    color: whitesmoke;
+}
+
+footer {
+    margin-top: auto;
+    margin-bottom: 10px;
+    
+}
+
+/* form */
+input, button {
+    display: block;
+    margin: 1em auto;
+    width: 50%;
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 5%;
+    border: none;
+    padding: 0.3em 0;
+}xw
+
+input::placeholder {
     text-align: center;
 }
 
-h1 {
-    margin-top: 40px;
+button:hover {
+    background-color: red; /* Color when hovered */
+}
+
+hr {
+    background-color: whitesmoke;
+    height: 10px;
+    width: 80%;
+}
+
+/* typography */
+h2 {
+    margin-top: 0;
+}
+
+/* table */
+table{
+    margin: 0 auto;
+    /* border-collapse: collapse; */
+    width: 80%;
+}
+
+.red {
+    border: 1px solid red;
 }

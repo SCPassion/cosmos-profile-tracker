@@ -3,9 +3,55 @@
     <head>
         <title></title>
         <link rel="stylesheet" href="/index.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h1>Hello world</h1>
+        <header>
+            <section class="">
+                <h1>Cosmos Portfolio Tracker</h1>
+            </section>
+            <hr>
+        </header>
+        <main>
+            <section class="">
+                <form>
+                    <label for="cosmos-address">Enter your $ATOM address here: </label>
+                    <input id="cosmos-address" type="text" name="cosmos-address" required placeholder="eg. cosmos...">
+                    <button type="submit">Submit</button>
+                </form>
+            </section>
+
+            <hr>
+            
+            <section id="portfolio">
+                <h2>Your Portfolio</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th>Amount</th>
+                            <th>Value in USD</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ATOM</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
+
+            </section>
+        </main>
+        <footer class="">
+            <section class="">
+                <p>Built by SCP with Love</p>
+            </section>
+        </footer>
         <script type="module" src="/index.js"></script>
     </body>
 </html>

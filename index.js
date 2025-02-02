@@ -1,6 +1,7 @@
 import { mapNetworkToSymbol, mapNetworkToTokenName, convertAddress, fetchAllBalances } from "./cosmosUtilities.js"
 import { fetchPrices } from "./fetchBinancePriceFeed.js"
 
+
 const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT"]
 
 const priceFeeds = await fetchPrices(symbols)
@@ -43,3 +44,8 @@ async function fetchBalances(networkAddresses) {
     const totalBalance = cosmosBalances.reduce((total, balance) => total + balance.usdBalance, 0)
     return {cosmosBalances, totalBalance}
 }
+
+document.addEventListener('submit', (e) => {
+    e.preventDefault()
+    console.log("Form submitted")
+});
