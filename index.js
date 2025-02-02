@@ -18,8 +18,6 @@ let baseTableHeader = `
     </thead>
 `
 
-const priceFeeds = await fetchPrices(symbols)
-
 // How to fetch prices every 2 seconds continuously?
 // const priceFetcher = setInterval(async ()=>console.log(await fetchPrices(symbols)), 2000)
 // setTimeout(()=> {
@@ -31,6 +29,24 @@ const priceFeeds = await fetchPrices(symbols)
 
 // cosmos addresses
 const selectedNetworks = ["celestia", "cosmoshub", "osmosis"]
+
+document.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    console.log("Form submitted: " + cosmosAddressInputEl.value)
+
+    const cosmosAddress = cosmosAddressInputEl.value
+    cosmosAddressInputEl.value = ""
+
+    const networkAddresses = getNetworkAddresses(cosmosAddress, selectedNetworks)
+    const totalBalance = await fetchBalances(networkAddresses)
+    console.log(totalBalance)
+
+    const porttableRows = getProtfolioTableRowsHTML(totalBalance)
+    const totalBalanceRow = getProtfolioTotalBalanceRowHTML(totalBalance)
+    
+    portfolioBodyEl.innerHTML = porttableRows
+    portfolioFooterEl.innerHTML = totalBalanceRow
+});
 
 function getNetworkAddresses(anyCosmosAddress, selectedNetworks) {
     return selectedNetworks.map(cosmosNetwork => {
@@ -44,6 +60,7 @@ function getNetworkAddresses(anyCosmosAddress, selectedNetworks) {
 }
 
 async function fetchBalances(networkAddresses) {
+    const priceFeeds = await fetchPrices(symbols)
     const cosmosBalances =  await fetchAllBalances(networkAddresses)
     cosmosBalances.forEach(cosmosBalance => {
         const tokenSymbol = cosmosBalance.token.toUpperCase() + "USDT"
@@ -54,34 +71,24 @@ async function fetchBalances(networkAddresses) {
     return {cosmosBalances, totalBalance}
 }
 
-document.addEventListener('submit', async (e) => {
-    e.preventDefault()
-    console.log("Form submitted: " + cosmosAddressInputEl.value)
 
-    const cosmosAddress = cosmosAddressInputEl.value
-    cosmosAddressInputEl.value = ""
-
-    const networkAddresses = getNetworkAddresses(cosmosAddress, selectedNetworks)
-    const totalBalance = await fetchBalances(networkAddresses)
-    console.log(totalBalance)
-
-    const porttableRows = totalBalance.cosmosBalances.map(cosmosBalance => `
+function getProtfolioTableRowsHTML(totalBalance) {
+    return totalBalance.cosmosBalances.map(cosmosBalance => `
         <tr>
             <td>${cosmosBalance.token.toUpperCase()}</td>
             <td>${cosmosBalance.currentTokenPrice}</td>
             <td>${cosmosBalance.balance}</td>
             <td>${cosmosBalance.usdBalance}</td>
         </tr>
-        `).join('')
+    `).join('')
+}
 
-    const totalBalanceRow = `
+function getProtfolioTotalBalanceRowHTML(totalBalance) {
+    return `
     <tfoot>
         <tr>
             <td colspan="2">Balance in USD: </td>
             <td colspan="2" id="total-value">${totalBalance.totalBalance.toFixed(2)}</td>
         </tr>
     </tfoot>`
-    
-    portfolioBodyEl.innerHTML = porttableRows
-    portfolioFooterEl.innerHTML = totalBalanceRow
-});
+}
