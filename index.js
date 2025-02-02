@@ -45,8 +45,8 @@ async function fetchBalances(networkAddresses) {
     const cosmosBalances =  await fetchAllBalances(networkAddresses)
     cosmosBalances.forEach(cosmosBalance => {
         const tokenSymbol = cosmosBalance.token.toUpperCase() + "USDT"
-        cosmosBalance['usdBalance'] = Number(priceFeeds[tokenSymbol] * cosmosBalance.balance).toFixed(2)
-        cosmosBalance['currentTokenPrice'] = Number(priceFeeds[tokenSymbol]).toFixed(2)
+        cosmosBalance['usdBalance'] = Number(Number(priceFeeds[tokenSymbol] * cosmosBalance.balance).toFixed(2))
+        cosmosBalance['currentTokenPrice'] = Number(Number(priceFeeds[tokenSymbol]).toFixed(2))
     })
     const totalBalance = cosmosBalances.reduce((total, balance) => total + balance.usdBalance, 0)
     return {cosmosBalances, totalBalance}
@@ -71,6 +71,14 @@ document.addEventListener('submit', async (e) => {
             <td>${cosmosBalance.usdBalance}</td>
         </tr>
         `).join('')
+
+    const totalBalanceRow = `
+    <tfoot>
+        <tr>
+            <td colspan="2">Balance in USD: </td>
+            <td colspan="2" id="total-value">${totalBalance.totalBalance.toFixed(2)}</td>
+        </tr>
+    </tfoot>`
     
-    portfolioTableEl.innerHTML = baseTableHeader + porttabelRows
+    portfolioTableEl.innerHTML = baseTableHeader + porttabelRows + totalBalanceRow
 });
