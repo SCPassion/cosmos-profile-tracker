@@ -1,6 +1,7 @@
 import { mapNetworkToSymbol, mapNetworkToTokenName, convertAddress, fetchAllBalances } from "./cosmosUtilities.js"
 import { fetchPrices } from "./fetchBinancePriceFeed.js"
 
+const cosmosAddressInputEl = document.getElementById('cosmos-address')
 
 const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT"]
 
@@ -17,7 +18,6 @@ const anyCosmosAddress = "celestia1d3zcy6zm69m23mewaw0ja96pjll8a2vflzz598"
 
 // cosmos addresses
 const selectedNetworks = ["celestia", "cosmoshub", "osmosis"]
-
 const networkAddresses = getNetworkAddresses(selectedNetworks)
 const totalBalance = await fetchBalances(networkAddresses)
 
@@ -47,5 +47,6 @@ async function fetchBalances(networkAddresses) {
 
 document.addEventListener('submit', (e) => {
     e.preventDefault()
-    console.log("Form submitted")
+    console.log("Form submitted: " + cosmosAddressInputEl.value)
+    cosmosAddressInputEl.value = ""
 });

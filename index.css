@@ -5,8 +5,8 @@
 /* semantic html */
 body {
     display: flex;
+    margin: 0;
     flex-direction: column;
-    background: #27292c;
     text-align: center;
     height: 100vh;
 
@@ -25,27 +25,19 @@ body {
 footer {
     margin-top: auto;
     margin-bottom: 10px;
-    
 }
 
 /* form */
 input, button {
-    display: block;
-    margin: 1em auto;
-    width: 50%;
-    font-size: 2rem;
-    cursor: pointer;
+    width: 70%;
+    font-size: 1.5rem;
+    margin: 0.7em auto 0 auto;
+    padding: 0.3em 1em;
+    text-align: center;
     border-radius: 5%;
     border: none;
-    padding: 0.3em 0;
-}xw
-
-input::placeholder {
-    text-align: center;
-}
-
-button:hover {
-    background-color: red; /* Color when hovered */
+    cursor: pointer;
+    background-color: whitesmoke; /* Set a default background */
 }
 
 hr {
