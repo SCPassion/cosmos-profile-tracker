@@ -1,5 +1,6 @@
 import { mapNetworkToSymbol, mapNetworkToTokenName, convertAddress, fetchAllBalances } from "./cosmosUtilities.js"
 import { fetchPrices } from "./fetchBinancePriceFeed.js"
+import { getProtfolioTableRowsHTML, getProtfolioTotalBalanceRowHTML, updateAddressDropDown } from "./uiControl.js"
 
 const saveAddressEl = document.getElementById('save-address')
 const selectAddressEl = document.getElementById('select-address')
@@ -16,7 +17,7 @@ const selectedNetworks = ["celestia", "cosmoshub", "osmosis", "saga"]
 let cosmosAddressesStorage = JSON.parse(localStorage.getItem('cosmosAddresses')) || []
 console.log(cosmosAddressesStorage)
 
-updateAddressDropDown()
+updateAddressDropDown(addressDropdown, cosmosAddressesStorage)
 
 // How to fetch prices every 2 seconds continuously?
 // const priceFetcher = setInterval(async ()=>console.log(await fetchPrices(symbols)), 2000)
@@ -38,7 +39,7 @@ saveAddressEl.addEventListener('submit', async (e) => {
     if(!cosmosAddressesStorage.includes(cosmosAddress)) {
         cosmosAddressesStorage.push(cosmosAddress)
         localStorage.setItem('cosmosAddresses', JSON.stringify(cosmosAddressesStorage))
-        updateAddressDropDown()
+        updateAddressDropDown(addressDropdown, cosmosAddressesStorage)
     }
 
 });
@@ -80,37 +81,6 @@ async function fetchBalances(networkAddresses) {
     })
     const totalBalance = cosmosBalances.reduce((total, balance) => total + balance.usdBalance, 0)
     return {cosmosBalances, totalBalance}
-}
-
-
-function getProtfolioTableRowsHTML(totalBalance) {
-    return totalBalance.cosmosBalances.map(cosmosBalance => `
-        <tr>
-            <td>${cosmosBalance.token.toUpperCase()}</td>
-            <td>${cosmosBalance.currentTokenPrice}</td>
-            <td>${cosmosBalance.balance}</td>
-            <td>${cosmosBalance.usdBalance}</td>
-        </tr>
-    `).join('')
-}
-
-function getProtfolioTotalBalanceRowHTML(totalBalance) {
-    return `
-    <tfoot>
-        <tr>
-            <td colspan="2">Balance in USD: </td>
-            <td colspan="2" id="total-value">${totalBalance.totalBalance.toFixed(2)}</td>
-        </tr>
-    </tfoot>`
-}
-
-function updateAddressDropDown() {
-    addressDropdown.innerHTML = ""
-    if(cosmosAddressesStorage.length > 0) {
-        addressDropdown.innerHTML = cosmosAddressesStorage.map(address => `<option value="${address}">${address}</option>`).join('')
-    } else {
-        addressDropdown.innerHTML = "<option value=''>No addresses saved</option>"
-    }
 }
 
 function clearLocalStorage() {
