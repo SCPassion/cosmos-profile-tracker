@@ -16,22 +16,31 @@
         </header>
         <main>
             <section id="save-address">
+                <h2>Enter your new $ATOM address:</h2>
                 <form>
-                    <label for="cosmos-address">Enter your new $ATOM address here: </label>
+                    <label for="cosmos-address">New $ATOM address here: </label>
                     <input id="cosmos-address" type="text" name="cosmos-address" required placeholder="eg. cosmos...">
                     <button id="submit" type="submit">Save</button>
                 </form>
             </section>
             <hr>
             <section id="select-address">
+                <h2>Select from addresses below:</h2>
                 <form>
-                    <label for="address-dropdown">Or, select from addresses below: </label>
+                    <label for="address-dropdown">Cosmos Address: </label>
                     <select id="address-dropdown">
                     </select>
                     <button id="submit" type="submit">Submit</button>
                 </form>
             </section>
             <hr>
+            <section id="balance-across-all-accounts">
+                <h2>Balance Across All Accounts in USD</h2>
+                <h3>
+                    <span id="total-balance">0.00</span>
+                </h3>
+                <hr>
+            </section>
             <section id="portfolio" class="hidden">
                 <h2>Your Portfolio</h2>
                 <table id="portfolio-table">

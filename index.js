@@ -4,6 +4,7 @@ import { fetchPrices } from "./fetchBinancePriceFeed.js"
 const saveAddressEl = document.getElementById('save-address')
 const selectAddressEl = document.getElementById('select-address')
 const addressDropdown = document.getElementById('address-dropdown')
+const totalBalanceEl = document.getElementById('total-balance')
 
 const cosmosAddressInputEl = document.getElementById('cosmos-address')
 const portfolioEl = document.getElementById('portfolio')
@@ -115,3 +116,19 @@ function updateAddressDropDown() {
 function clearLocalStorage() {
     localStorage.removeItem("cosmosAddresses");
 }
+
+async function getBalanceAcrossAllCosmosAddressess() {
+
+    if(cosmosAddressesStorage.length > 0) {
+        const totalBalances = await Promise.all(cosmosAddressesStorage.map(async (cosmosAddress) => {
+            const networkAddresses = getNetworkAddresses(cosmosAddress, selectedNetworks)
+            return (fetchBalances(networkAddresses))
+        }))
+        console.log(totalBalances)
+        totalBalanceEl.textContent = `$ ${totalBalances.reduce((total, balance)=> total + balance.totalBalance, 0).toFixed(2)}`
+    } else {
+        totalBalanceEl.textContent = "$0.00"
+    }
+}
+
+getBalanceAcrossAllCosmosAddressess()
