@@ -32,15 +32,12 @@ let baseTableHeader = `
 
 document.addEventListener('submit', async (e) => {
     e.preventDefault()
-    console.log("Form submitted: " + cosmosAddressInputEl.value)
 
     const cosmosAddress = cosmosAddressInputEl.value
     cosmosAddressInputEl.value = ""
 
     const networkAddresses = getNetworkAddresses(cosmosAddress, selectedNetworks)
-    console.log(networkAddresses)
     const totalBalance = await fetchBalances(networkAddresses)
-    console.log(totalBalance)
 
     const porttableRows = getProtfolioTableRowsHTML(totalBalance)
     const totalBalanceRow = getProtfolioTotalBalanceRowHTML(totalBalance)
