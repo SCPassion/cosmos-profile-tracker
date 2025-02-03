@@ -2,6 +2,7 @@ import { mapNetworkToSymbol, mapNetworkToTokenName, convertAddress, fetchAllBala
 import { fetchPrices } from "./fetchBinancePriceFeed.js"
 
 const cosmosAddressInputEl = document.getElementById('cosmos-address')
+const portfolioEl = document.getElementById('portfolio')
 const portfolioBodyEl = document.getElementById('portfolio-body')
 const portfolioFooterEl = document.getElementById('portfolio-footer')
 
@@ -44,6 +45,8 @@ document.addEventListener('submit', async (e) => {
     
     portfolioBodyEl.innerHTML = porttableRows
     portfolioFooterEl.innerHTML = totalBalanceRow
+
+    portfolioEl.classList.remove('hidden')
 });
 
 function getNetworkAddresses(anyCosmosAddress, selectedNetworks) {
