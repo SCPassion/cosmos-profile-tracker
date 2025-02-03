@@ -5,7 +5,8 @@ const mapNetworkToSymbol = {
     celestia: "celestia",
     cosmoshub: "cosmos",
     osmosis: "osmo",
-    juno: "juno"
+    juno: "juno",
+    saga: "saga"
 }
 
 // Address symbol for address reconstruction
@@ -13,7 +14,8 @@ const mapNetworkToTokenName = {
     celestia: "tia",
     cosmoshub: "atom",
     osmosis: "osmo",
-    juno: "juno"
+    juno: "juno",
+    saga: "saga"
 }
 
 // Convert a cosmos address to a different network prefix

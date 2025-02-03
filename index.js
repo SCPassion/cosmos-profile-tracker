@@ -5,7 +5,8 @@ const cosmosAddressInputEl = document.getElementById('cosmos-address')
 const portfolioBodyEl = document.getElementById('portfolio-body')
 const portfolioFooterEl = document.getElementById('portfolio-footer')
 
-const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT"]
+const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT", "SAGAUSDT"]
+const selectedNetworks = ["celestia", "cosmoshub", "osmosis", "saga"]
 
 let baseTableHeader = `
     <thead>
@@ -28,7 +29,6 @@ let baseTableHeader = `
 // const anyCosmosAddress = "celestia1d3zcy6zm69m23mewaw0ja96pjll8a2vflzz598"
 
 // cosmos addresses
-const selectedNetworks = ["celestia", "cosmoshub", "osmosis"]
 
 document.addEventListener('submit', async (e) => {
     e.preventDefault()
@@ -38,6 +38,7 @@ document.addEventListener('submit', async (e) => {
     cosmosAddressInputEl.value = ""
 
     const networkAddresses = getNetworkAddresses(cosmosAddress, selectedNetworks)
+    console.log(networkAddresses)
     const totalBalance = await fetchBalances(networkAddresses)
     console.log(totalBalance)
 
