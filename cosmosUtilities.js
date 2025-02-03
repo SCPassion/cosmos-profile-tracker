@@ -36,21 +36,21 @@ async function fetchBalance(cosmosNetwork) {
     const baseCosmosUrl = `https://rest.cosmos.directory/${networkName}/cosmos`
 
     try {
-    const DataPromise = await Promise.all([
-        fetch(`${baseCosmosUrl}/bank/v1beta1/balances/${address}`), 
-        fetch(`${baseCosmosUrl}/staking/v1beta1/delegations/${address}`), 
-        fetch(`${baseCosmosUrl}/distribution/v1beta1/delegators/${address}/rewards`)]
-    )
+        const DataPromise = await Promise.all([
+            fetch(`${baseCosmosUrl}/bank/v1beta1/balances/${address}`), 
+            fetch(`${baseCosmosUrl}/staking/v1beta1/delegations/${address}`), 
+            fetch(`${baseCosmosUrl}/distribution/v1beta1/delegators/${address}/rewards`)]
+        )
 
-    const [liquidData, stakingData, rewardData] = await Promise.all(DataPromise.map(response => response.json()))
+        const [liquidData, stakingData, rewardData] = await Promise.all(DataPromise.map(response => response.json()))
 
-    const liquidBalance = liquidData.balances.length > 0 ? Number(liquidData.balances.find(balances => balances.denom === "u" + tokenName).amount) / 1000000 : 0
-    const stakingBalance = stakingData.delegation_responses.length > 0 ? Number(stakingData.delegation_responses[0].balance.amount) / 1000000 : 0
-    const rewardBalance = rewardData.rewards.length > 0 ? Number(rewardData.rewards[0].reward[0].amount) / 1000000 : 0
-    
-    const totalBalance = ((liquidBalance + stakingBalance + rewardBalance)).toFixed(2)
+        const liquidBalance = liquidData.balances.length > 0 ? Number(liquidData.balances.find(balances => balances.denom === "u" + tokenName).amount) / 1000000 : 0
+        const stakingBalance = stakingData.delegation_responses.length > 0 ? Number(stakingData.delegation_responses[0].balance.amount) / 1000000 : 0
+        const rewardBalance = rewardData.rewards.length > 0 ? Number(rewardData.rewards[0].reward[0].amount) / 1000000 : 0
+        
+        const totalBalance = ((liquidBalance + stakingBalance + rewardBalance)).toFixed(2)
 
-    return {network: networkName, address: address, token: tokenName, balance: Number(totalBalance)}
+        return {network: networkName, address: address, token: tokenName, balance: Number(totalBalance)}
     } catch (error) {
         console.error(`Error fetching balance for ${networkName}:`, error)
     }
