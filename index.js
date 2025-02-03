@@ -1,6 +1,10 @@
 import { mapNetworkToSymbol, mapNetworkToTokenName, convertAddress, fetchAllBalances } from "./cosmosUtilities.js"
 import { fetchPrices } from "./fetchBinancePriceFeed.js"
 
+const saveAddressEl = document.getElementById('save-address')
+const selectAddressEl = document.getElementById('select-address')
+const addressDropdown = document.getElementById('address-dropdown')
+
 const cosmosAddressInputEl = document.getElementById('cosmos-address')
 const portfolioEl = document.getElementById('portfolio')
 const portfolioBodyEl = document.getElementById('portfolio-body')
@@ -8,17 +12,10 @@ const portfolioFooterEl = document.getElementById('portfolio-footer')
 
 const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT", "SAGAUSDT"]
 const selectedNetworks = ["celestia", "cosmoshub", "osmosis", "saga"]
+let cosmosAddressesStorage = JSON.parse(localStorage.getItem('cosmosAddresses')) || []
+console.log(cosmosAddressesStorage)
 
-let baseTableHeader = `
-    <thead>
-        <tr>
-            <th>Token</th>
-            <th>Price in USD</th>
-            <th>Amount</th>
-            <th>Total Value</th>
-        </tr>
-    </thead>
-`
+updateAddressDropDown()
 
 // How to fetch prices every 2 seconds continuously?
 // const priceFetcher = setInterval(async ()=>console.log(await fetchPrices(symbols)), 2000)
@@ -31,12 +28,24 @@ let baseTableHeader = `
 
 // cosmos addresses
 
-document.addEventListener('submit', async (e) => {
+saveAddressEl.addEventListener('submit', async (e) => {
     e.preventDefault()
 
     const cosmosAddress = cosmosAddressInputEl.value
     cosmosAddressInputEl.value = ""
+    
+    if(!cosmosAddressesStorage.includes(cosmosAddress)) {
+        cosmosAddressesStorage.push(cosmosAddress)
+        localStorage.setItem('cosmosAddresses', JSON.stringify(cosmosAddressesStorage))
+        updateAddressDropDown()
+    }
 
+});
+
+selectAddressEl.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+    const cosmosAddress = addressDropdown.value
     const networkAddresses = getNetworkAddresses(cosmosAddress, selectedNetworks)
     const totalBalance = await fetchBalances(networkAddresses)
 
@@ -92,4 +101,17 @@ function getProtfolioTotalBalanceRowHTML(totalBalance) {
             <td colspan="2" id="total-value">${totalBalance.totalBalance.toFixed(2)}</td>
         </tr>
     </tfoot>`
+}
+
+function updateAddressDropDown() {
+    addressDropdown.innerHTML = ""
+    if(cosmosAddressesStorage.length > 0) {
+        addressDropdown.innerHTML = cosmosAddressesStorage.map(address => `<option value="${address}">${address}</option>`).join('')
+    } else {
+        addressDropdown.innerHTML = "<option value=''>No addresses saved</option>"
+    }
+}
+
+function clearLocalStorage() {
+    localStorage.removeItem("cosmosAddresses");
 }

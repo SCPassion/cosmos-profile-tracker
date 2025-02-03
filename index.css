@@ -27,8 +27,11 @@ footer {
     margin-bottom: 10px;
 }
 
+label {
+    display: block;
+}
 /* form */
-input, button {
+input, button, select {
     width: 70%;
     font-size: 1.5rem;
     margin: 0.7em auto 0 auto;
