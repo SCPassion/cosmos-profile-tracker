@@ -41,6 +41,7 @@ label {
 
 #nav {
     margin-left: auto;
+    cursor: pointer;
 }
 
 /* form */
@@ -131,3 +132,46 @@ i {
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+#modal {
+    width: 70%;
+    height: 1000px;
+    background-color: rgba(111, 111, 111, 0.95);
+    justify-content: center;
+    position:fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 1em;
+    border-radius: 50px;
+}
+
+#modal-title h2 {
+    margin: 0;
+}
+
+#modal-title{
+    margin-left: auto;
+}
+
+#modal-close {
+    margin-left: auto;
+    cursor: pointer;
+}
+    /* 
+#modal-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+}
+
+#close-modal {
+    cursor: pointer;
+    /* margin-top: auto; */
+    /* margin-bottom: auto; */
+/* }  */
+
