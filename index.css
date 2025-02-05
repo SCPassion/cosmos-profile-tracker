@@ -25,13 +25,14 @@ body {
 
 footer {
     margin-top: auto;
-    margin-bottom: 0;
+    margin-bottom: 1em;
     background-color: #373B44;
 }
 
 label {
     display: block;
 }
+
 /* form */
 input, button, select {
     width: 70%;
@@ -51,11 +52,17 @@ hr {
     width: 80%;
 }
 
+
 /* typography */
 h2 {
     margin-top: 0;
     margin-bottom: 0.5em;
 }
+
+p {
+    margin-bottom: 0.5em;
+}
+
 
 /* table */
 table{
@@ -64,12 +71,21 @@ table{
     width: 90%;
 }
 
-.red {
-    border: 1px solid red;
-}
-
 .hidden {
     display: none;
+}
+
+/* icon */
+.icon-container {
+    margin-bottom: 2em;
+}
+
+a {
+    color: whitesmoke;
+}
+
+i {
+    font-size: 4rem;
 }
 
 @media (min-width: 1024px) {
