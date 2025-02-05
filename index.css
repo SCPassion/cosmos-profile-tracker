@@ -33,6 +33,16 @@ label {
     display: block;
 }
 
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#nav {
+    margin-left: auto;
+}
+
 /* form */
 input, button, select {
     width: 70%;

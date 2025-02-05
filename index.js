@@ -11,7 +11,7 @@ const cosmosAddressInputEl = document.getElementById('cosmos-address')
 const portfolioEl = document.getElementById('portfolio')
 const portfolioBodyEl = document.getElementById('portfolio-body')
 const portfolioFooterEl = document.getElementById('portfolio-footer')
-
+const navMenu = document.getElementById('nav')
 const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT", "SAGAUSDT"]
 const selectedNetworks = ["celestia", "cosmoshub", "osmosis", "saga"]
 let cosmosAddressesStorage = JSON.parse(localStorage.getItem('cosmosAddresses')) || []
@@ -30,6 +30,10 @@ updateAddressDropDown(addressDropdown, cosmosAddressesStorage)
 // const anyCosmosAddress = "celestia1d3zcy6zm69m23mewaw0ja96pjll8a2vflzz598"
 
 // cosmos addresses
+
+navMenu.addEventListener('click', (e) => {
+    console.log("click")
+})
 
 saveAddressEl.addEventListener('submit', async (e) => {
     e.preventDefault()
