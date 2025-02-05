@@ -6,14 +6,15 @@
 body {
     display: flex;
     margin: 0;
+    padding: 1em;
     flex-direction: column;
     text-align: center;
     height: 100vh;
 
-    background: #373B44;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    background: #373B44;
+    /* background: -webkit-linear-gradient(to top, #4286f4, #373B44); */
+    /* background: linear-gradient(to top, #4286f4, #373B44);  */
+    /* background-size: 100%; */
     font-family: "Orbitron", serif;
     font-optical-sizing: auto;
     font-weight: 400;
@@ -24,7 +25,8 @@ body {
 
 footer {
     margin-top: auto;
-    margin-bottom: 10px;
+    margin-bottom: 0;
+    background-color: #373B44;
 }
 
 label {
@@ -52,6 +54,7 @@ hr {
 /* typography */
 h2 {
     margin-top: 0;
+    margin-bottom: 0.5em;
 }
 
 /* table */
@@ -67,4 +70,33 @@ table{
 
 .hidden {
     display: none;
+}
+
+@media (min-width: 1024px) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr) / repeat(12, 1fr);
+        grid-template-areas: 
+        "head head head head head head head head head head head head"
+        "left left left left left left righ righ righ righ righ righ"
+        "down down down down down down down down down down down down";
+
+        gap: 1.5em;
+    }
+    
+    #save-address {
+        grid-area: head;
+    }
+    
+    #select-address {
+        grid-area: left;
+    }
+    
+    #balance-across-all-accounts {
+        grid-area: righ;
+    }
+    
+    #portfolio {
+        grid-area: down;
+    }
 }
