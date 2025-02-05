@@ -6,7 +6,7 @@ const saveAddressEl = document.getElementById('save-address')
 const selectAddressEl = document.getElementById('select-address')
 const addressDropdown = document.getElementById('address-dropdown')
 const totalBalanceEl = document.getElementById('total-balance')
-
+const submitAddressButton = document.getElementById('submit-address')
 const cosmosAddressInputEl = document.getElementById('cosmos-address')
 const portfolioEl = document.getElementById('portfolio')
 const portfolioBodyEl = document.getElementById('portfolio-body')
@@ -15,7 +15,8 @@ const portfolioFooterEl = document.getElementById('portfolio-footer')
 const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT", "SAGAUSDT"]
 const selectedNetworks = ["celestia", "cosmoshub", "osmosis", "saga"]
 let cosmosAddressesStorage = JSON.parse(localStorage.getItem('cosmosAddresses')) || []
-console.log(cosmosAddressesStorage)
+
+const throttledSelectAddressHandler = throttleSelectAddressHandler(selectAddressHandler, 10000)
 
 updateAddressDropDown(addressDropdown, cosmosAddressesStorage)
 
@@ -44,9 +45,26 @@ saveAddressEl.addEventListener('submit', async (e) => {
 
 });
 
-selectAddressEl.addEventListener('submit', async (e) => {
-    e.preventDefault()
+selectAddressEl.addEventListener('submit', throttledSelectAddressHandler);
 
+function throttleSelectAddressHandler(func, delay) {
+    let throttleTimeout = null
+    return (...args) => {
+        args[0].preventDefault()
+        if(!throttleTimeout) {
+            submitAddressButton.disabled = true
+            submitAddressButton.textContent = "Cooling down..."
+            func(...args)
+            throttleTimeout = setTimeout(()=> {
+                submitAddressButton.disabled = false
+                throttleTimeout = null
+                submitAddressButton.textContent = "Submit"
+            }, delay)
+        }
+    }
+}
+async function selectAddressHandler(e) {
+    // console.log(e)
     const cosmosAddress = addressDropdown.value
     const networkAddresses = getNetworkAddresses(cosmosAddress, selectedNetworks)
     const totalBalance = await fetchBalances(networkAddresses)
@@ -58,7 +76,7 @@ selectAddressEl.addEventListener('submit', async (e) => {
     portfolioFooterEl.innerHTML = totalBalanceRow
 
     portfolioEl.classList.remove('hidden')
-});
+}
 
 function getNetworkAddresses(anyCosmosAddress, selectedNetworks) {
     return selectedNetworks.map(cosmosNetwork => {
