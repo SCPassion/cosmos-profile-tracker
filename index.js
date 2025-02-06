@@ -1,6 +1,6 @@
 import { mapNetworkToSymbol, mapNetworkToTokenName, convertAddress, fetchAllBalances } from "./cosmosUtilities.js"
 import { fetchPrices } from "./fetchBinancePriceFeed.js"
-import { getProtfolioTableRowsHTML, getProtfolioTotalBalanceRowHTML, updateAddressDropDown } from "./uiControl.js"
+import { getProtfolioTableRowsHTML, getProtfolioTotalBalanceRowHTML, updateAddressDropDown, updateModalAddressLists } from "./uiControl.js"
 
 const saveAddressEl = document.getElementById('save-address')
 const selectAddressEl = document.getElementById('select-address')
@@ -11,16 +11,18 @@ const cosmosAddressInputEl = document.getElementById('cosmos-address')
 const portfolioEl = document.getElementById('portfolio')
 const portfolioBodyEl = document.getElementById('portfolio-body')
 const portfolioFooterEl = document.getElementById('portfolio-footer')
-const navMenu = document.getElementById('nav')
 const modal = document.getElementById('modal')
-const modalClose = document.getElementById('modal-close')
+const addressList = document.getElementById('address-list')
+
 const symbols = ["TIAUSDT", "OSMOUSDT", "ATOMUSDT", "SAGAUSDT"]
 const selectedNetworks = ["celestia", "cosmoshub", "osmosis", "saga"]
+
 let cosmosAddressesStorage = JSON.parse(localStorage.getItem('cosmosAddresses')) || []
 
 const throttledSelectAddressHandler = throttleSelectAddressHandler(selectAddressHandler, 10000)
 
 updateAddressDropDown(addressDropdown, cosmosAddressesStorage)
+updateModalAddressLists(addressList, cosmosAddressesStorage)
 
 // How to fetch prices every 2 seconds continuously?
 // const priceFetcher = setInterval(async ()=>console.log(await fetchPrices(symbols)), 2000)
@@ -33,13 +35,14 @@ updateAddressDropDown(addressDropdown, cosmosAddressesStorage)
 
 // cosmos addresses
 
-navMenu.addEventListener('click', (e) => {
-    modal.classList.toggle('hidden')
+document.addEventListener('click', (e) => {
+    if(e.target.id === 'nav-icon') {
+        modal.classList.toggle('hidden')
+    } else if (e.target.id === 'modal-close-icon') {
+        modal.classList.add('hidden')
+    }
 })
 
-modalClose.addEventListener('click', (e) => {
-    modal.classList.add('hidden')
-})
 saveAddressEl.addEventListener('submit', async (e) => {
     e.preventDefault()
 

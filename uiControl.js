@@ -28,4 +28,17 @@ function updateAddressDropDown(addressDropdown, cosmosAddressesStorage) {
     }
 }
 
-export { getProtfolioTableRowsHTML, getProtfolioTotalBalanceRowHTML, updateAddressDropDown}
+function updateModalAddressLists(addressList, cosmosAddressesStorage) {
+    if (cosmosAddressesStorage.length > 0) {
+        addressList.innerHTML = ""
+        const cosmosAddressesHTML = cosmosAddressesStorage.map(cosmosAddress => 
+            `
+            <li>
+                <p>${cosmosAddress}</p>
+                <button class="delete-address" data-address="${cosmosAddress}">Delete</button>
+            </li>`).join('')
+        addressList.innerHTML = cosmosAddressesHTML
+    }
+}
+
+export { getProtfolioTableRowsHTML, getProtfolioTotalBalanceRowHTML, updateAddressDropDown, updateModalAddressLists}
