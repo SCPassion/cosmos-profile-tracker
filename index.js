@@ -21,8 +21,13 @@ let cosmosAddressesStorage = JSON.parse(localStorage.getItem('cosmosAddresses'))
 
 const throttledSelectAddressHandler = throttleSelectAddressHandler(selectAddressHandler, 10000)
 
-updateAddressDropDown(addressDropdown, cosmosAddressesStorage)
-updateModalAddressLists(addressList, cosmosAddressesStorage)
+updateDisplay()
+
+function updateDisplay() {
+    updateAddressDropDown(addressDropdown, cosmosAddressesStorage)
+    updateModalAddressLists(addressList, cosmosAddressesStorage)
+    getBalanceAcrossAllCosmosAddressess()
+}
 
 // How to fetch prices every 2 seconds continuously?
 // const priceFetcher = setInterval(async ()=>console.log(await fetchPrices(symbols)), 2000)
@@ -40,6 +45,11 @@ document.addEventListener('click', (e) => {
         modal.classList.toggle('hidden')
     } else if (e.target.id === 'modal-close-icon') {
         modal.classList.add('hidden')
+    } else if (e.target.dataset.address) {
+        const cosmosAddress = e.target.dataset.address
+        cosmosAddressesStorage = cosmosAddressesStorage.filter(address => address !== cosmosAddress)
+        localStorage.setItem('cosmosAddresses', JSON.stringify(cosmosAddressesStorage))
+        updateDisplay()
     }
 })
 
@@ -52,7 +62,7 @@ saveAddressEl.addEventListener('submit', async (e) => {
     if(!cosmosAddressesStorage.includes(cosmosAddress)) {
         cosmosAddressesStorage.push(cosmosAddress)
         localStorage.setItem('cosmosAddresses', JSON.stringify(cosmosAddressesStorage))
-        updateAddressDropDown(addressDropdown, cosmosAddressesStorage)
+        updateDisplay()
     }
 
 });
@@ -130,5 +140,3 @@ async function getBalanceAcrossAllCosmosAddressess() {
         totalBalanceEl.textContent = "$0.00"
     }
 }
-
-getBalanceAcrossAllCosmosAddressess()

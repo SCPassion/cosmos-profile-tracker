@@ -38,6 +38,8 @@ function updateModalAddressLists(addressList, cosmosAddressesStorage) {
                 <button class="delete-address" data-address="${cosmosAddress}">Delete</button>
             </li>`).join('')
         addressList.innerHTML = cosmosAddressesHTML
+    } else {
+        addressList.innerHTML = "<li>No addresses saved</li>"
     }
 }
 
