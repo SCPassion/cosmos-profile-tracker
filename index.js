@@ -130,8 +130,19 @@ async function getBalanceAcrossAllCosmosAddressess() {
             const networkAddresses = getNetworkAddresses(cosmosAddress, selectedNetworks)
             return (fetchBalances(networkAddresses))
         }))
-        // console.log(totalBalances)
-        totalBalanceEl.textContent = `$ ${totalBalances.reduce((total, balance)=> total + balance.totalBalance, 0).toFixed(2)}`
+        const balance = new Object()
+        totalBalances.forEach(totalBalance => {
+            totalBalance.cosmosBalances.forEach(cosmosBalance => {
+                if(balance[cosmosBalance.token]) {
+                    balance[cosmosBalance.token] += cosmosBalance.balance
+                } else {
+                    balance[cosmosBalance.token] = cosmosBalance.balance
+                }
+            })
+        })
+
+        const html = Object.keys(balance).map(token=> `<p class="token-summary">${token.toUpperCase()}: ${balance[token].toFixed(2)}</p>`).join('')
+        totalBalanceEl.innerHTML = html + `<p class="token-summary" id="total-summary"> Total in USD: $ ${totalBalances.reduce((total, balance)=> total + balance.totalBalance, 0).toFixed(2)}</p>`
     } else {
         totalBalanceEl.textContent = "$0.00"
     }

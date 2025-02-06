@@ -26,8 +26,12 @@ function convertAddress(address, prefix) {
 
 // Fetch balances for all networks
 async function fetchAllBalances(networkAddresses) {
-    const balances = await Promise.all(networkAddresses.map(network => fetchBalance(network)))
-    return balances
+    try {
+        const balances = await Promise.all(networkAddresses.map(network => fetchBalance(network)))
+        return balances
+    } catch (error) {
+        console.error("Error fetching balances:", error)
+    }
 }
 
 // Fetch balance for a single network
