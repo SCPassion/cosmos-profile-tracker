@@ -39,7 +39,7 @@ function updateModalAddressLists(addressList, cosmosAddressesStorage) {
             </li>`).join('')
         addressList.innerHTML = cosmosAddressesHTML
     } else {
-        addressList.innerHTML = "<li>No addresses saved</li>"
+        addressList.innerHTML = `<p id="no-address">No addresses saved</p>`
     }
 }
 
