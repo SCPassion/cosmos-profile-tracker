@@ -36,10 +36,6 @@ function updateDisplay() {
 //     console.log("Stop fetching")
 // }, 20000)
 
-// const anyCosmosAddress = "celestia1d3zcy6zm69m23mewaw0ja96pjll8a2vflzz598"
-
-// cosmos addresses
-
 document.addEventListener('click', (e) => {
     if(e.target.id === 'nav-icon') {
         modal.classList.toggle('hidden')
@@ -134,7 +130,7 @@ async function getBalanceAcrossAllCosmosAddressess() {
             const networkAddresses = getNetworkAddresses(cosmosAddress, selectedNetworks)
             return (fetchBalances(networkAddresses))
         }))
-        console.log(totalBalances)
+        // console.log(totalBalances)
         totalBalanceEl.textContent = `$ ${totalBalances.reduce((total, balance)=> total + balance.totalBalance, 0).toFixed(2)}`
     } else {
         totalBalanceEl.textContent = "$0.00"

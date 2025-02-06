@@ -126,6 +126,16 @@ i {
     #portfolio {
         grid-area: down;
     }
+
+    li {
+        display: flex;
+        gap: 1em;
+        align-items: center;
+    }
+
+    .delete-address {
+        width: 20%;
+    }
 }
 
 #submit-address:disabled {
@@ -165,9 +175,6 @@ li {
     /* list-style-type: none; */
     width: 100%;
     padding: 0.3em 0.1em;
-    display: flex;
-    gap: 1em;
-    align-items: center;
 }
 
 .address {
@@ -175,7 +182,6 @@ li {
 }
 
 .delete-address {
-    width: 20%;
+    width: 30%;
     border-radius: 10%;
-    
 }
