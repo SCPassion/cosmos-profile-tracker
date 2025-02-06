@@ -34,7 +34,7 @@ function updateModalAddressLists(addressList, cosmosAddressesStorage) {
         const cosmosAddressesHTML = cosmosAddressesStorage.map(cosmosAddress => 
             `
             <li>
-                <p>${cosmosAddress}</p>
+                <p class="address">${cosmosAddress}</p>
                 <button class="delete-address" data-address="${cosmosAddress}">Delete</button>
             </li>`).join('')
         addressList.innerHTML = cosmosAddressesHTML

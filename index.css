@@ -160,24 +160,22 @@ i {
     margin-left: auto;
     cursor: pointer;
 }
-    /* 
-#modal-close {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 100px;
-}
-
-#close-modal {
-    cursor: pointer;
-    /* margin-top: auto; */
-    /* margin-bottom: auto; */
-/* }  */
 
 li {
     /* list-style-type: none; */
     width: 100%;
-    overflow-x: scroll;
     padding: 0.3em 0.1em;
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+.address {
+    overflow-x: scroll;
+}
+
+.delete-address {
+    width: 20%;
+    border-radius: 10%;
+    
 }
